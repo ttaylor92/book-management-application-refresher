@@ -25,6 +25,7 @@ QSTASH_URL=
 QSTASH_TOKEN=
 
 RESEND_TOKEN=
+EMAIL_DOMAIN=
 ```
 
 First, run the development server:
