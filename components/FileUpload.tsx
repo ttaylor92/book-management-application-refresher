@@ -2,7 +2,6 @@
 
 import { IKImage, ImageKitProvider, IKUpload, IKVideo } from "imagekitio-next";
 import config from "@/lib/config";
-import ImageKit from "imagekit";
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { toast } from "@/hooks/use-toast";
@@ -16,7 +15,7 @@ const {
 
 const authenticator = async () => {
   try {
-    const response = await fetch(`${config.env.apiEndpoint}/api/auth/imagekit`);
+    const response = await fetch(`${config.env.apiEndpoint}/api/imagekit`);
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -31,7 +30,8 @@ const authenticator = async () => {
     const { signature, expire, token } = data;
 
     return { token, expire, signature };
-  } catch (error: any) {
+  } catch (error) {
+    // @ts-expect-error: unknown type but includes message
     throw new Error(`Authentication request failed: ${error.message}`);
   }
 };
@@ -70,7 +70,7 @@ const FileUpload = ({
     text: variant === "dark" ? "text-light-100" : "text-dark-400",
   };
 
-  const onError = (error: any) => {
+  const onError = (error: unknown) => {
     console.log(error);
 
     toast({
@@ -80,9 +80,9 @@ const FileUpload = ({
     });
   };
 
-  const onSuccess = (res: any) => {
+  const onSuccess = <T extends { filePath: string | null }>(res: T) => {
     setFile(res);
-    onFileChange(res.filePath);
+    onFileChange(res.filePath as string);
 
     toast({
       title: `${type} uploaded successfully`,
@@ -144,7 +144,7 @@ const FileUpload = ({
           e.preventDefault();
 
           if (ikUploadRef.current) {
-            // @ts-ignore
+            // @ts-expect-error: click method is present
             ikUploadRef.current?.click();
           }
         }}
@@ -173,6 +173,7 @@ const FileUpload = ({
       )}
 
       {file &&
+        file.filePath &&
         (type === "image" ? (
           <IKImage
             alt={file.filePath}
