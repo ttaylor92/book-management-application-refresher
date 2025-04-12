@@ -31,8 +31,7 @@ const authenticator = async () => {
     const { signature, expire, token } = data;
 
     return { token, expire, signature };
-  } catch (error: unknown) {
-    // @ts-expect-error: unknown type but message property will exist
+  } catch (error: any) {
     throw new Error(`Authentication request failed: ${error.message}`);
   }
 };
@@ -145,7 +144,7 @@ const FileUpload = ({
           e.preventDefault();
 
           if (ikUploadRef.current) {
-            // @ts-expect-error: click is present but due to intellisense check we expect an error to be thrown
+            // @ts-ignore
             ikUploadRef.current?.click();
           }
         }}
@@ -176,14 +175,14 @@ const FileUpload = ({
       {file &&
         (type === "image" ? (
           <IKImage
-            alt={file.filePath ?? ""}
-            path={file.filePath ?? undefined}
+            alt={file.filePath}
+            path={file.filePath}
             width={500}
             height={300}
           />
         ) : type === "video" ? (
           <IKVideo
-            path={file.filePath ?? undefined}
+            path={file.filePath}
             controls={true}
             className="h-96 w-full rounded-xl"
           />
