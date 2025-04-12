@@ -2,6 +2,31 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+**Set Up Environment Variables**
+
+Create a new file named `.env` with the following content:
+
+```env
+NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY=
+IMAGEKIT_PRIVATE_KEY=
+NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT=
+
+NEXT_PUBLIC_API_ENDPOINT=
+NEXT_PUBLIC_PROD_API_ENDPOINT=
+
+DATABASE_URL=
+
+UPSTASH_REDIS_URL=
+UPSTASH_REDIS_TOKEN=
+
+AUTH_SECRET=
+
+QSTASH_URL=
+QSTASH_TOKEN=
+
+RESEND_TOKEN=
+```
+
 First, run the development server:
 
 ```bash
